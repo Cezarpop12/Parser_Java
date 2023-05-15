@@ -1,0 +1,40 @@
+package Token;
+
+public enum TokenType {
+    //OPERATORS
+    PLUS,
+    MINUS,
+    MULTIPLY,
+    DIVIDE,
+    BRACKETS_OPEN,
+    BRACKETS_CLOSE,
+
+    //EQUALITY
+    IS_THE_SAME,
+    IS_NOT_THE_SAME,
+
+    //COMPARISON
+    BIGGER,
+    BIGGER_OR_EQUAL,
+    SMALLER,
+    SMALLER_OR_EQUAL,
+
+    //CONDITIONAL
+    CONDITIONAL_OR,
+    CONDITIONAL_AND,
+
+    //ASSIGNMENT
+    EQUAL_TO,
+    ADD_TO,
+    SUBTRACT_FROM,
+
+    //LITERALS
+    NUMERIC_LITERAL,
+    STRING_LITERAL,
+
+    //OTHERS
+    KEYWORD,
+    DATATYPE,
+    IDENTIFIER,
+    EOF
+}
