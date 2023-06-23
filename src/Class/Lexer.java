@@ -125,6 +125,17 @@ public class Lexer {
                         tokens.add(new Token(TokenType.NUMERIC_LITERAL, number.toString()));
                         this._cursor--;
                     }
+                    else if (currentCharValue(this._input) == '"') {
+                        this._cursor++;
+                        StringBuilder string = new StringBuilder();
+                        while (canStillTokenize() == true && currentCharIsStringLiteral(this._input) == true) {
+                            string.append(currentCharValue(this._input));
+                            this._cursor++;
+                        }
+                        if (currentCharValue(this._input) == '"') {
+                            tokens.add(new Token(TokenType.STRING_LITERAL, string.toString()));
+                        }
+                    }
                     else if (currentCharIsStringLiteral(this._input) == true) {
                         StringBuilder string = new StringBuilder();
                         while (canStillTokenize() == true && currentCharIsStringLiteral(this._input) == true) {
@@ -135,19 +146,13 @@ public class Lexer {
                             case " ":
                                 break;
                             case "if":
-                                tokens.add(new Token(TokenType.KEYWORD, "if"));
-                                break;
                             case "while":
-                                tokens.add(new Token(TokenType.KEYWORD, "while"));
-                                break;
                             case "for":
-                                tokens.add(new Token(TokenType.KEYWORD, "for"));
+                                tokens.add(new Token(TokenType.KEYWORD, string.toString()));
                                 break;
                             case "int":
-                                tokens.add(new Token(TokenType.DATATYPE, "int"));
-                                break;
                             case "string":
-                                tokens.add(new Token(TokenType.DATATYPE, "string"));
+                                tokens.add(new Token(TokenType.DATATYPE, string.toString()));
                                 break;
                             default:
 //                                  Token token = tokens.get(tokens.size() - 1);

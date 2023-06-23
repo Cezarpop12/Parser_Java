@@ -1,8 +1,8 @@
 package Class;
 
-import Expressions.BinaryExpression;
+import Expressions.SingleExpression;
 import Expressions.Expression;
-import Expressions.NumericLiteralExpression;
+import Expressions.BinaryExpression;
 import Token.Token;
 import Token.TokenType;
 
@@ -43,6 +43,7 @@ public class Parser {
         Expression expression = parse_term();
         while (this.getCurrentToken().getTokenType() == TokenType.PLUS || this.getCurrentToken().getTokenType() == TokenType.MINUS) {
             Token operator = this.getCurrentToken();
+            Expression operatorExpression = new SingleExpression(operator);
             TokenType tokentype = null;
             if (this.getCurrentToken().getTokenType() == TokenType.PLUS) {
                 tokentype = TokenType.PLUS;
@@ -53,7 +54,8 @@ public class Parser {
                 this.eatToken(tokentype);
             }
             Expression rightHandSide = this.parse_term();
-            expression = new BinaryExpression(expression, rightHandSide, operator);
+//            expression = operator.LED(expression, operator, rightHandSide);
+            expression = new BinaryExpression(expression, rightHandSide, operatorExpression);
         }
         return expression;
     }
@@ -62,6 +64,7 @@ public class Parser {
         Expression expression = this.parse_factor();
         while (this.getCurrentToken().getTokenType() == TokenType.MULTIPLY || this.getCurrentToken().getTokenType() == TokenType.DIVIDE) {
             Token operator = this.getCurrentToken();
+            Expression operatorExpression = new SingleExpression(operator);
             TokenType tokentype = null;
             if (this.getCurrentToken().getTokenType() == TokenType.MULTIPLY) {
                 tokentype = TokenType.MULTIPLY;
@@ -72,17 +75,19 @@ public class Parser {
                 this.eatToken(tokentype);
             }
             Expression rightHandSide = this.parse_factor();
-            expression = new BinaryExpression(expression, rightHandSide, operator);
+//            expression = operator.LED(expression, operator, rightHandSide);
+            expression = new BinaryExpression(expression, rightHandSide, operatorExpression);
         }
         return expression;
     }
 
     public Expression parse_factor() throws Exception {
         if(this.getCurrentToken().getTokenType() == TokenType.NUMERIC_LITERAL) {
-            Token numericToken = this.getCurrentToken();
-            Expression literalExpression = new NumericLiteralExpression(numericToken);
+            Token numericLiteral = this.getCurrentToken();
+            Expression numericExpression = new SingleExpression(numericLiteral);
             this.eatToken(TokenType.NUMERIC_LITERAL);
-            return literalExpression;
+            return numericExpression;
+//            return numericToken.NUD(literalExpression);
         }
         if(this.getCurrentToken().getTokenType() == TokenType.BRACKETS_OPEN) {
             this.eatToken((TokenType.BRACKETS_OPEN));

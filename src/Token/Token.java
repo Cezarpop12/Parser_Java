@@ -1,7 +1,7 @@
 package Token;
 
+import Expressions.BinaryExpression;
 import Expressions.Expression;
-import Expressions.NumericLiteralExpression;
 
 public class Token {
     private TokenType tokenType;
@@ -15,7 +15,6 @@ public class Token {
     public Token() {
     }
 
-    public NumericLiteralExpression NUD()
     public TokenType getTokenType() {
         return tokenType;
     }
